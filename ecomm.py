@@ -2,19 +2,19 @@ import pymysql
 import datetime
 def I1():
     try:
-        ce=input("Enter Email ")
-        cp=input("Enter Password ")
-        cfn=input("Enter First Name ")
-        cln=input("Enter Last Name ")
-        csn=input("Enter Street No. ")
-        cpc=int(input("Enter Pincode "))
-        cc=input("Enter City ")
-        cs=input("Enter State ")
-        cphn=int(input("Enter no. of phone no.'s "))
+        ce=input("Enter Email: ")
+        cp=input("Enter Password: ")
+        cfn=input("Enter First Name: ")
+        cln=input("Enter Last Name: ")
+        csn=input("Enter Street No.: ")
+        cpc=int(input("Enter Pincode: "))
+        cc=input("Enter City: ")
+        cs=input("Enter State: ")
+        cphn=int(input("Enter no. of phone no.'s: "))
         ph=[]
         for i in range(cphn):
-            ph.append(input("Enter phone no. "))
-        mycursor.execute("INSERT INTO Customers_Address VALUES(%s, %s, %s)",(cpc,cs,cc))
+            ph.append(input("Enter phone no.: "))
+        mycursor.execute("INSERT INTO Customers_Address VALUES(%s, %s, %s)" , (cpc,cs,cc))
         mycursor.execute("INSERT INTO Customers(C_Email,C_Password,C_Fname,C_Lname,C_Street_No,C_Pin_Code) VALUES(%s, %s, %s, %s, %s, %s)",(ce,cp,cfn,cln,csn,cpc))
         for i in range(cphn):
             mycursor.execute("INSERT INTO Customers_Phone VALUES(%s, %s)",(ce,ph[i]))
@@ -25,11 +25,11 @@ def I1():
 
 def I2():
     try:
-        vg=input("Enter GSTIN no. ")
-        vph=input("Enter phone no. ")
-        vem=input("Enter Email ")
-        vf=input("Enter First Name ")
-        vl=input("Enter Last Name ")
+        vg=input("Enter GSTIN no.: ")
+        vph=input("Enter phone no.: ")
+        vem=input("Enter Email: ")
+        vf=input("Enter First Name: ")
+        vl=input("Enter Last Name: ")
         mycursor.execute("INSERT INTO Vendor VALUES(%s, %s, %s, %s, %s)",(vg,vph,vem,vf,vl))
         mydb.commit()
     except Exception as e:
@@ -38,12 +38,12 @@ def I2():
 
 def I3():
     try:
-        wid=input("Enter ID ")
-        wcap=int(input("Enter Capacity "))
-        wsn=input("Enter Street No. ")
-        wpc=input("Enter Pincode ")
-        wc=input("Enter City ")
-        ws=input("Enter State ")
+        wid=input("Enter ID: ")
+        wcap=int(input("Enter Capacity: "))
+        wsn=input("Enter Street No.: ")
+        wpc=input("Enter Pincode: ")
+        wc=input("Enter City: ")
+        ws=input("Enter State: ")
         mycursor.execute("INSERT INTO Warehouse_Address VALUES(%s, %s, %s)",(wpc,wc,ws))
         mycursor.execute("INSERT INTO Warehouse VALUES(%s, %s, %s, %s)",(wid,wsn,wpc,wcap))
         mydb.commit()
@@ -53,18 +53,18 @@ def I3():
 
 def I4():
     try: 
-        ipid=input("Enter ID ")
-        iname=input("Enter Name ")
-        iv=input("Enter Vendor GSTIN ")
-        ispec=input("Enter Specifications ")
-        ip=float(input("Enter Price "))
-        iq=int(input("Enter Quantity "))
-        itn=int(input("Enter No. of Tags "))
+        ipid=input("Enter ID: ")
+        iname=input("Enter Name: ")
+        iv=input("Enter Vendor GSTIN: ")
+        ispec=input("Enter Specifications: ")
+        ip=float(input("Enter Price: "))
+        iq=int(input("Enter Quantity: "))
+        itn=int(input("Enter No. of Tags: "))
         tags=[]
         for i in range(itn):
-            tags.append(input("Enter tag "))
-        ir=int(input("Enter Rating(out of 10) "))
-        irev=input("Enter Review ")
+            tags.append(input("Enter tag: "))
+        ir=int(input("Enter Rating(out of 10): "))
+        irev=input("Enter Review: ")
         mycursor.execute("INSERT INTO Items VALUES(%s, %s, %s, %s)",(ipid,iv,ip,iq))
         mycursor.execute("INSERT INTO Items_info VALUES(%s, %s, %s, %s, %s)",(ipid,ir,irev,iname,ispec))
         for i in range(itn):
@@ -76,16 +76,16 @@ def I4():
     
 def I5():
     try:
-        eid=input("Enter ID ")
-        eaid=input("Enter Adhaar ID ")
-        epos=input("Enter Position ")
-        ef=input("Enter First Name ")
-        el=input("Enter Last Name ")
-        emid=input("Enter Manager ID ")
-        ephn=int(input("Enter no. of phone no.'s "))
+        eid=input("Enter ID: ")
+        eaid=input("Enter Adhaar ID: ")
+        epos=input("Enter Position: ")
+        ef=input("Enter First Name: ")
+        el=input("Enter Last Name: ")
+        emid=input("Enter Manager ID: ")
+        ephn=int(input("Enter no. of phone no.'s: "))
         ph=[]
         for i in range(ephn):
-            ph.append(input("Enter phone no. "))
+            ph.append(input("Enter phone no.: "))
         if emid=="":
             emid=None
         mycursor.execute("INSERT INTO Employees VALUES(%s, %s, %s, %s, %s, %s)",(eid,eaid,epos,ef,el,emid))
@@ -98,17 +98,17 @@ def I5():
 
 def I6():
     try:
-        oid=input("Enter ID ")
-        oit=input("Enter Item ID ")
-        ounit=int(input("Enter Units Sold "))
-        ow=input("Enter Warehouse ID for this order ")
-        oeid=input("Enter Employee ID who is handling the order ")
-        oce=input("Enter Customer Email ")
-        osn=input("Enter Street No. ")
-        opc=int(input("Enter Pincode "))
-        oc=input("Enter City ")
-        os=input("Enter State ")
-        od=input("Enter date placed YYYY-MM-DD ")
+        oid=input("Enter ID: ")
+        oit=input("Enter Item ID: ")
+        ounit=int(input("Enter Units Sold: "))
+        ow=input("Enter Warehouse ID for this order: ")
+        oeid=input("Enter Employee ID who is handling the order: ")
+        oce=input("Enter Customer Email: ")
+        osn=input("Enter Street No.: ")
+        opc=int(input("Enter Pincode: "))
+        oc=input("Enter City: ")
+        os=input("Enter State: ")
+        od=input("Enter date placed YYYY-MM-DD: ")
         # deriving eta as od+3 days
         ed=int(od[8])*10+int(od[9])
         em=int(od[5])*10+int(od[6])
@@ -117,8 +117,8 @@ def I6():
         date = datetime.datetime(ey,em,ed)
         date += datetime.timedelta(days=3)
         oeta=str(date.date())
-        ost=input("Enter delivery status ")
-        op=float(input("Enter Price "))
+        ost=input("Enter delivery status: ")
+        op=float(input("Enter Price: "))
 
         mycursor.execute("INSERT INTO Orders_Address VALUES(%s, %s,%s)",(opc,oc,os))
         mycursor.execute("INSERT INTO Orders VALUES(%s, %s,%s,%s,%s)",(oid,oce,osn,opc,od))
@@ -141,8 +141,8 @@ while(1):
     # username = input("Enter mysql username- ")
     # passwd = input("Enter mysql password- ")
     # database = input("Enter mysql database- ")
-    username="assignment"
-    passwd="assignment"
+    username="adyansh"
+    passwd="Password1$"
     database="TEAM_15"
     try:
         mydb = pymysql.connect(host="localhost", user=username, password=passwd,db=database)
