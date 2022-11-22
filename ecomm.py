@@ -152,8 +152,8 @@ while(cont=="y"):
     # username = input("Enter mysql username- ")
     # passwd = input("Enter mysql password- ")
     # database = input("Enter mysql database- ")
-    username="adyansh"
-    passwd="Password1$"
+    username="assignment"  # CHANGE DETAILS
+    passwd="assignment"
     database="TEAM_15"
     try:
         mydb = pymysql.connect(host="localhost", user=username, password=passwd,db=database)
