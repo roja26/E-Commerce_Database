@@ -1,5 +1,8 @@
+# change foreign key to ON DELETE CASCADE
+
 import pymysql
 import datetime
+from datetime import date
 def I1():
     try:
         ce=input("Enter Email: ")
@@ -146,6 +149,26 @@ def Q1():
     except Exception as e:
         mydb.rollback()
         print(e)
+# Q2
+# select b.O_City city from Orders a JOIN Orders_Address b on a.O_Pin_Code=b.O_Pin_Code JOIN Ordered_In c on a.O_Id=c.O_Id JOIN Items d on c.I_Pid=d.I_Pid WHERE d.I_Vendor="123";
+
+
+def U1():
+    try:
+        today = date.today()
+        today=str(today)
+        mycursor.execute("UPDATE Orders_ETA SET O_Status='DELIVERED' WHERE O_ETA <= %s",(today))
+        mydb.commit()
+    except Exception as e:
+        mydb.rollback()
+        print(e)
+def U3():
+    try:
+        mycursor.execute("DELETE FROM Orders WHERE O_Id in (SELECT a.O_Id from Orders_Id a,Orders_ETA b WHERE a.O_ETA=b.O_ETA AND b.O_Status='CANCELLED')")
+    except Exception as e:
+        mydb.rollback()
+        print(e)
+
 
 cont="y"
 while(cont=="y"):
@@ -165,8 +188,8 @@ while(cont=="y"):
             while(cont=="y"):
                 print("Option  | Task")
                 print("-------------------------------------------")
-                print("I1.     Insert Customer")
-                print("I2.     Insert Vendor")
+                print("I1.     Insert Customer")                                        
+                print("I2.     Insert Vendor")          
                 print("I3.     Insert Warehouse")
                 print("I4.     Insert Item")
                 print("I5.     Insert Employee")
@@ -176,7 +199,7 @@ while(cont=="y"):
                 print("Q3.     Display all the employees under a manager")
                 print("Q4.     Display Number of Warehouses in a City")
                 print("Q5.     Display amount spent by a Customer on the site")
-                print("U1.     Update status of order once it has been delivered")
+                print("U1.     Update status of order that it has been delivered")
                 print("U2.     Update Quantity of a Sold Item")
                 print("U3      Delete a cancelled order")
                 print("X.      EXIT")
@@ -198,6 +221,8 @@ while(cont=="y"):
                     I6()
                 if opt=="Q1":
                     Q1()
+                if opt=="U1":
+                    U1()
                 print("==============================================")
                 cont=input("Do you want to continue?(y/n) ")
     except Exception as e:
