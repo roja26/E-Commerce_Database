@@ -208,7 +208,7 @@ def Q4():
         mycursor.execute(f'SELECT W.W_ID, W.W_Pin_Code, W.W_Street_No FROM Warehouse W, Warehouse_Address A WHERE A.W_Pin_Code = W.W_Pin_Code AND A.W_City = "{city}";')
         data = mycursor.fetchall()
         print(f"Warehouses in {city} are-->")
-        print("Warehouse ID\tWarehouse Street Number\tWarehouse Pin Code")
+        print("Warehouse ID\tStreet Number\tPin Code")
         for i in data:
             print(i[0],"\t",i[1],"\t",i[2])
     except Exception as e:
