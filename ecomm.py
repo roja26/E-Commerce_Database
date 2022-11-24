@@ -18,7 +18,7 @@ def I1():
         for i in range(cphn):
             ph.append(input("Enter phone no.: "))
         mycursor.execute(
-            "INSERT INTO Customers_Address VALUES(%s, %s, %s)", (cpc, cs, cc))
+            "INSERT IGNORE INTO Customers_Address VALUES(%s, %s, %s)", (cpc, cs, cc))
         mycursor.execute(
             "INSERT INTO Customers(C_Email,C_Password,C_Fname,C_Lname,C_Street_No,C_Pin_Code) VALUES(%s, %s, %s, %s, %s, %s)", (ce, cp, cfn, cln, csn, cpc))
         for i in range(cphn):
@@ -54,7 +54,7 @@ def I3():
         wc = input("Enter City: ")
         ws = input("Enter State: ")
         mycursor.execute(
-            "INSERT INTO Warehouse_Address VALUES(%s, %s, %s)", (wpc, wc, ws))
+            "INSERT IGNORE INTO Warehouse_Address VALUES(%s, %s, %s)", (wpc, wc, ws))
         mycursor.execute(
             "INSERT INTO Warehouse VALUES(%s, %s, %s, %s)", (wid, wsn, wpc, wcap))
         mydb.commit()
@@ -140,7 +140,7 @@ def I6():
         op = float(input("Enter Price: "))
 
         mycursor.execute(
-            "INSERT INTO Orders_Address VALUES(%s, %s,%s)", (opc, oc, os))
+            "INSERT IGNORE INTO Orders_Address VALUES(%s, %s,%s)", (opc, oc, os))
         mycursor.execute(
             "INSERT INTO Orders VALUES(%s, %s,%s,%s,%s)", (oid, oce, osn, opc, od))
         mycursor.execute("INSERT INTO Orders_ETA VALUES(%s, %s)", (oeta, ost))
@@ -262,6 +262,7 @@ functions = {
     "U1": U1,
     # "U2": U2,
     "U3": U3,
+    # "U4": U4,
     "X": exit
 }
 
@@ -304,22 +305,6 @@ while(cont == "y"):
                 opt = input("Enter the option you want to execute - ")
                 if opt != "X":
                     print("==================OUTPUT======================")
-                # if opt == "X":
-                #     exit()
-                # if opt == "I1":
-                #     I1()
-                # if opt == "I2":
-                #     I2()
-                # if opt == "I3":
-                #     I3()
-                # if opt == "I4":
-                #     I4()
-                # if opt == "I5":
-                #     I5()
-                # if opt == "I6":
-                #     I6()
-                # if opt == "Q1":
-                #     Q1()
                 functions[opt]()
                 print("==============================================")
                 cont = input("Do you want to continue?(y/n) ")
