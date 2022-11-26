@@ -18,7 +18,7 @@ DROP TABLE IF EXISTS `Employee_Phone`;
 CREATE TABLE `Employee_Phone` (
   `E_EID` varchar(30) NOT NULL,
   `E_Ph` varchar(10) NOT NULL,
-  FOREIGN KEY(`E_EID`) REFERENCES `Employees`(`E_EID`)
+  FOREIGN KEY(`E_EID`) REFERENCES `Employees`(`E_EID`) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS `Vendor`;

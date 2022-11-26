@@ -27,7 +27,7 @@ def I1():
         mydb.commit()
     except Exception as e:
         mydb.rollback()
-        print(e)
+        print('Error:',e)
 
 
 def I2():
@@ -42,7 +42,7 @@ def I2():
         mydb.commit()
     except Exception as e:
         mydb.rollback()
-        print(e)
+        print('Error:',e)
 
 
 def I3():
@@ -60,7 +60,7 @@ def I3():
         mydb.commit()
     except Exception as e:
         mydb.rollback()
-        print(e)
+        print('Error:',e)
 
 
 def I4():
@@ -87,7 +87,7 @@ def I4():
         mydb.commit()
     except Exception as e:
         mydb.rollback()
-        print(e)
+        print('Error:',e)
 
 
 def I5():
@@ -112,7 +112,7 @@ def I5():
         mydb.commit()
     except Exception as e:
         mydb.rollback()
-        print(e)
+        print('Error:',e)
 
 
 def I6():
@@ -160,7 +160,7 @@ def I6():
         mydb.commit()
     except Exception as e:
         mydb.rollback()
-        print(e)
+        print('Error:',e)
 
 
 def Q1():
@@ -171,15 +171,15 @@ def Q1():
         print(f"Items with Rating > {rating} are-->")
         print("Item ID\tItem Name")
         for i in data:
-            print(i[0], "\t", i[3])
+            print(i[0], "\t", i[3],sep="")
     except Exception as e:
         mydb.rollback()
-        print(e)
+        print('Error:',e)
 
 def Q2():
     try:
-        vendor = input('Enter vendor full name: ')
-        mycursor.execute(f'SELECT A.O_City FROM Items I ,Vendor V,Ordered_In O, Orders Ord, Orders_Address A WHERE CONCAT(V.V_Fname," ",V.V_Lname) = "{vendor}" AND I.I_Vendor = V.V_GSTIN AND O.I_Pid = I.I_Pid AND Ord.O_Id = O.O_Id AND Ord.O_Pin_Code = A.O_Pin_Code;')
+        vendor = input('Enter vendor GSTIN: ')
+        mycursor.execute(f'SELECT A.O_City FROM Items I,Vendor V,Ordered_In O, Orders Ord, Orders_Address A WHERE V.V_GSTIN = "{vendor}" AND I.I_Vendor = V.V_GSTIN AND O.I_Pid = I.I_Pid AND Ord.O_Id = O.O_Id AND Ord.O_Pin_Code = A.O_Pin_Code;')
         data = mycursor.fetchall()
         print(f"Cities that {vendor} has delivered to-->")
         print("City")
@@ -187,33 +187,33 @@ def Q2():
             print(i)
     except Exception as e:
         mydb.rollback()
-        print(e)
+        print('Error:',e)
 
 def Q3():
     try:
         meid = input('Enter manager employee Id: ')
-        mycursor.execute(f'SELECT E_EID,CONCAT(E_Fname," ",E_Lname) FROM Employees WHERE E_EID = {meid};')
+        mycursor.execute(f'SELECT E_EID, CONCAT(E_Fname," ",E_Lname) FROM Employees WHERE Mgr_EID = "{meid}";')
         data = mycursor.fetchall()
         print(f"Employees under EID = {meid} are-->")
-        print("Employee ID\tEmployee Name")
+        print("EID\tName")
         for i in data:
-            print(i[0],"\t",i[1])
+            print(i[0],"\t",i[1],sep="")
     except Exception as e:
         mydb.rollback()
-        print(e)
+        print('Error:',e)
 
 def Q4():
     try:
         city = input('Enter city name: ')
-        mycursor.execute(f'SELECT W.W_ID, W.W_Pin_Code, W.W_Street_No FROM Warehouse W, Warehouse_Address A WHERE A.W_Pin_Code = W.W_Pin_Code AND A.W_City = "{city}";')
+        mycursor.execute(f'SELECT W.W_ID, W.W_Street_No, W.W_Pin_Code FROM Warehouse W, Warehouse_Address A WHERE A.W_Pin_Code = W.W_Pin_Code AND A.W_City = "{city}";')
         data = mycursor.fetchall()
         print(f"Warehouses in {city} are-->")
-        print("Warehouse ID\tStreet Number\tPin Code")
+        print("WID\tStreet No.\tPin Code")
         for i in data:
-            print(i[0],"\t",i[1],"\t",i[2])
+            print(i[0],"\t",i[1],"\t\t",i[2],sep="")
     except Exception as e:
         mydb.rollback()
-        print(e)
+        print('Error:',e)
 
 def Q5():
     try:
@@ -225,11 +225,11 @@ def Q5():
         print("Order ID\tAmount Spent")
         for i in data:
             sum += int(i[1])
-            print(i[0],"\t",i[1])
+            print(i[0],"\t\t",i[1],sep="")
         print(f"Total Amount spent by {customer} is",sum)
     except Exception as e:
         mydb.rollback()
-        print(e)
+        print('Error:',e)
 
 def U1():
     try:
@@ -238,14 +238,34 @@ def U1():
         mydb.commit()
     except Exception as e:
         mydb.rollback()
-        print(e)
+        print('Error:',e)
     
+def U2():
+    try:
+        mycursor.execute("SELECT Units_sold,I_Pid FROM Ordered_In")
+        data=mycursor.fetchall()
+        for i in range(len(data)):
+            mycursor.execute("UPDATE Items SET I_Quantity=I_Quantity-%s WHERE I_Pid=%s",data[i])
+        mydb.commit()
+    except Exception as e:
+        mydb.rollback()
+        print('Error:',e)
+
 def U3():
     try:
         mycursor.execute("DELETE FROM Orders WHERE O_Id in (SELECT a.O_Id from Orders_Id a,Orders_ETA b WHERE a.O_ETA=b.O_ETA AND b.O_Status='CANCELLED')")
     except Exception as e:
         mydb.rollback()
-        print(e)
+        print('Error:',e)
+
+def U4():
+    try:
+        eid = input('Enter employee id: ')
+        mycursor.execute("DELETE FROM Employees WHERE E_EID= %s", eid)
+        mydb.commit()
+    except Exception as e:
+        mydb.rollback()
+        print('Error:',e)
 
 functions = {
     "I1": I1,
@@ -260,9 +280,9 @@ functions = {
     "Q4": Q4,
     "Q5": Q5,
     "U1": U1,
-    # "U2": U2,
+    "U2": U2,
     "U3": U3,
-    # "U4": U4,
+    "U4": U4,
     "X": exit
 }
 
@@ -292,7 +312,7 @@ while(cont == "y"):
                 print("I4.     Insert Item")
                 print("I5.     Insert Employee")
                 print("I6.     Insert details of Order")
-                print("Q1.     Display items with Rating > 3")
+                print("Q1.     Display items with Rating > x")
                 print("Q2.     Display cities a vendor has delivered to")
                 print("Q3.     Display all the employees under a manager")
                 print("Q4.     Display Details of Warehouses in a City")
@@ -309,7 +329,7 @@ while(cont == "y"):
                 print("==============================================")
                 cont = input("Do you want to continue?(y/n) ")
     except Exception as e:
-        print(e)
+        print('Error:',e)
 
 
 """
